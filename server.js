@@ -56,7 +56,7 @@ app.post("/api/shorturl", (req, res, next) => {
   });
 });
 
-app.get("/api/shorturl/:short_url", (req, res) => {
+app.get("/api/shorturl/:short_url", (req, res, next) => {
   findOriginalUrl(req.params.short_url, (err, url) => {
     if (err) {
       return next(err);
