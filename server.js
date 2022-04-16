@@ -26,6 +26,7 @@ app.get('/api/hello', function (req, res) {
 const ShortUrl = require('./shorturl.js').ShortUrlModel;
 const createShortUrl = require('./shorturl.js').createAndSave;
 const findOriginalUrl = require('./shorturl.js').findOriginalByShortUrl;
+const findOriginalUrl2 = require('./shorturl.js').findOriginalByShortUrl2;
 
 app.post("/api/shorturl", (req, res, next) => {
 
@@ -58,6 +59,19 @@ app.post("/api/shorturl", (req, res, next) => {
 
 app.get("/api/shorturl/:short_url", (req, res, next) => {
   findOriginalUrl(req.params.short_url, (err, url) => {
+    if (err) {
+      return next(err);
+    }
+    if (!url) {
+      res.json({ error: "No short URL found for the given input" });
+    }
+    else
+      res.redirect(url.original_url);
+  });
+});
+
+app.get("/:short_url", (req, res, next) => {
+  findOriginalUrl2(req.params.short_url, (err, url) => {
     if (err) {
       return next(err);
     }
