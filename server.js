@@ -18,11 +18,6 @@ app.get('/', function (req, res) {
   res.sendFile(process.cwd() + '/views/index.html');
 });
 
-// Your first API endpoint
-app.get('/api/hello', function (req, res) {
-  res.json({ greeting: 'hello API' });
-});
-
 const ShortUrl = require('./shorturl.js').ShortUrlModel;
 const createShortUrl = require('./shorturl.js').createAndSave;
 const findOriginalUrl = require('./shorturl.js').findOriginalByShortUrl;
