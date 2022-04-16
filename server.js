@@ -6,14 +6,9 @@ const app = express();
 var bodyParser = require("body-parser");
 
 // Basic Configuration
-const port = process.env.PORT || 3000;
-
 app.use(cors());
-
 app.use('/public', express.static(`${process.cwd()}/public`));
-
 app.use(bodyParser.urlencoded({ extended: false }));
-
 app.get('/', function (req, res) {
   res.sendFile(process.cwd() + '/views/index.html');
 });
@@ -24,12 +19,11 @@ const findOriginalUrl = require('./shorturl.js').findOriginalByShortUrl;
 const findOriginalUrl2 = require('./shorturl.js').findOriginalByShortUrl2;
 
 app.post("/api/shorturl", (req, res, next) => {
-
   // Check invalid url format
   const HTTPS_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
   if (!(req.body.url.match(new RegExp(HTTPS_REGEX))))
     return res.json({ error: "Invalid URL" });
-
+    
   //Check invalid hostname
   const REPLACE_REGEX = /^https?:\/\//i
   const _url = req.body.url.replace(REPLACE_REGEX, '');
@@ -78,6 +72,6 @@ app.get("/:short_url", (req, res, next) => {
   });
 });
 
-app.listen(port, function () {
+app.listen(process.env.PORT || 3000, function () {
   console.log(`Listening on port ${port}`);
 });
