@@ -50,7 +50,7 @@ app.post("/api/shorturl", (req, res, next) => {
           if (err) {
             return next(err);
           }
-          res.json({ original_url: url.original_url, short_url: url.short_url });
+          res.json({ original_url: url.original_url, short_url: url.short_url_2 });
         });
       });
     }
